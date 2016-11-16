@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <arduino_com.h>
 
 /* Lex and Yacc variables */
 
@@ -62,7 +63,7 @@ instruction:
 	;
 
 instr_touch:
-	INSTR_TOUCH				{/*touch();*/}
+	INSTR_TOUCH				{touch();}
 	;
 
 instr_push:
@@ -146,15 +147,15 @@ void _move(int _x, int _y)
 		int val = keyboard[curr_y][curr_x];
 		if (val == 67)
 		{
-			move('C');
+			move_ce('C');
 		}
 		else if (val == 69)
 		{
-			move('E');
+			move_ce('E');
 		}
 		else
 		{
-			move(val)
+			move(val);
 		}
 		sleep(1);
 		_move(_x, _y);
@@ -165,10 +166,12 @@ void _move(int _x, int _y)
 
 void set_coordinates(int number)
 {
-	for (int i = 0; i < 4; i++)
+	int i;
+	for ( i = 0; i < 4; i++)
 	{
 		y = i;
-		for (int j = 0; j < 3; j++)
+		int j;
+		for (j = 0; j < 3; j++)
 		{
 			x = j;
 			if (keyboard[i][j] == number) return;
@@ -181,9 +184,9 @@ void set_coordinates(int number)
 
 void drag(int _x, int _y)
 {
-	/*touch();*/
+	touch();
 	_move(_x, _y);
-	/*touch();*/
+	touch();
 }
 
 /* Performs the dialing of the pin established by the PIN instruction */
@@ -198,9 +201,11 @@ void pin(int _pin)
 		int val = *buffer - '0';
 		set_coordinates(val);
 		_move(x, y);
-		/*touch();*/
+		touch();
 	}
-
+	_move(2,3);
+	touch();	
+	
 	free(*buffer);
 }
 

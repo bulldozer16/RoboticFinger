@@ -1,1 +1,8 @@
 pin 696969
+move 0 1
+move 2 2
+move 3 3
+drag 0 0 
+touch
+push 5
+pin 691666

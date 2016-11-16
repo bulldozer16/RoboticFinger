@@ -31,51 +31,51 @@ void loop() {
     
     Serial.println(input);
 
-    if(input == '2'){
+    if(input == '0'){
       offAll();
       digitalWrite(2, HIGH);
     }
-    else if (input == '3'){
+    else if (input == '1'){
       offAll();
       digitalWrite(3, HIGH);
     }
-    else if (input == '4'){
+    else if (input == '2'){
       offAll();
       digitalWrite(4, HIGH);
     }
-    else if (input == '5'){
+    else if (input == '3'){
       offAll();
       digitalWrite(5, HIGH);
     }
-    else if (input == '6'){
+    else if (input == '4'){
       offAll();
       digitalWrite(6, HIGH);
     }
-    else if (input == '7'){
+    else if (input == '5'){
       offAll();
       digitalWrite(7, HIGH);
     }
-    else if (input == '8'){
+    else if (input == '6'){
       offAll();
       digitalWrite(8, HIGH);
     }
-    else if (input == '9'){
+    else if (input == '7'){
       offAll();
       digitalWrite(9, HIGH);
     }
-    else if (input == '0'){
+    else if (input == '8'){
       offAll();
       digitalWrite(10, HIGH);
     }
-    else if (input == ':'){
+    else if (input == '9'){
       offAll();
       digitalWrite(11, HIGH);
     }
-    else if (input == 'c'){
+    else if (input == 'C'){
       offAll();
       digitalWrite(12, HIGH);
     }
-    else if (input == 'e'){
+    else if (input == 'E'){
       offAll();
       digitalWrite(13, HIGH);
     }
