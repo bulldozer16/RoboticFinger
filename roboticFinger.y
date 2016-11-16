@@ -73,7 +73,9 @@ instr_push:
 							}
 							else
 							{
-								/*push(t);*/
+								push("ON");
+								sleep(t);
+								push("OFF");
 							}							
 						}
 	;
