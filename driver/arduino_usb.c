@@ -1,17 +1,17 @@
 #include <linux/module.h>
 #include <linux/kernel.h>
 #include <linux/usb.h>
- 
+
+#define BULK_EP_OUT 0x04   //address where arduino device allow write
+#define BULK_EP_IN 0x83		//address where arduino device allow read
 #define MIN(a,b) (((a) <= (b)) ? (a) : (b))
-#define BULK_EP_OUT 0x04
-#define BULK_EP_IN 0x83
 #define MAX_PKT_SIZE 512
 
 #define DRIVER_AUTHOR "OskrD"
 #define DRIVER_DESC "Serial control for a mechanical finger on Arduino platform"
 
-#define VENDOR_ID 0x2341
-#define PRODUCT_ID 0x0043
+#define VENDOR_ID 0x2341   // vendor_id for arduino
+#define PRODUCT_ID 0x0043	// product_id for arduino
 
  
 static struct usb_device *device;
@@ -27,19 +27,22 @@ MODULE_AUTHOR(DRIVER_AUTHOR);
 MODULE_DESCRIPTION(DRIVER_DESC);
 MODULE_VERSION("0.6.9");
 
- 
+//implements open by the OS
 static int arduino_open(struct inode *i, struct file *f)
 {
     printk("Open()\n");
     return 0;
 }
+
+//implements close by the OS
 static int arduino_close(struct inode *i, struct file *f)
 {
     printk("Close()\n");
     return 0;
 }
 
-
+//handle an write function for a driver file, 
+//and send the second character to device, use 9600 bauds like typically in arduino
 static ssize_t arduino_write(struct file *f, const char __user *buf, size_t cnt, loff_t *off)
 {
     int retval;
@@ -64,7 +67,7 @@ static ssize_t arduino_write(struct file *f, const char __user *buf, size_t cnt,
     return wrote_cnt;
 }
 
- 
+//mappping operations to main functions in the driver 
 static struct file_operations fops =
 {
     .open = arduino_open,
@@ -72,6 +75,7 @@ static struct file_operations fops =
     .write = arduino_write,
 };
  
+//Routine for probe the correct operations of driver
 static int arduino_probe(struct usb_interface *interface, const struct usb_device_id *id)
 {
     int retval;
@@ -93,6 +97,7 @@ static int arduino_probe(struct usb_interface *interface, const struct usb_devic
     return retval;
 }
  
+//handle the disconnect of device
 static void arduino_disconnect(struct usb_interface *interface)
 {
     usb_deregister_dev(interface, &class);
@@ -106,6 +111,7 @@ static struct usb_device_id arduino_table[] =
 };
 MODULE_DEVICE_TABLE (usb, arduino_table);
  
+//describe the characteristics of the module
 static struct usb_driver arduino_driver =
 {
     .name = "arduino_driver",
@@ -114,6 +120,7 @@ static struct usb_driver arduino_driver =
     .id_table = arduino_table,
 };
  
+//initialize driver, run on insmod instruction on user space
 static int __init arduino_init(void)
 {
     int result;
@@ -126,6 +133,7 @@ static int __init arduino_init(void)
     return result;
 }
  
+//finish drive, run on rmmod instruction on user space
 static void __exit arduino_exit(void)
 {
     /* Deregister this driver with the USB subsystem */

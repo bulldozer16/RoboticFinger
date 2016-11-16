@@ -2,9 +2,14 @@
 #include <stdlib.h>
 #include <string.h>
 
+/*
+ * Library to arduino_usb.ko
+ * Write to /dev/arduino1 file to send serial data to device
+ * Author: OskrD
+ */
 FILE * device;   //pointer for a file handled to driver
 
-
+//handle a begin or end to push function 
 void push(char * state){
 	device = fopen("/dev/arduino1","r+");
 	if(device != NULL){
@@ -21,7 +26,7 @@ void push(char * state){
 	}
 }
 
-
+//handle a touch function 
 void touch(){
 	device = fopen("/dev/arduino1","r+");
 	if(device != NULL){
@@ -33,6 +38,7 @@ void touch(){
 	}
 }
 
+//handle a move function, receive an appropiate new position for the movement
 void move(int pos){
 	device = fopen("/dev/arduino1","r+");
 	if(device != NULL){
@@ -44,12 +50,11 @@ void move(int pos){
 	}
 }
 
+//handle a move function, receive an appropiate value for the cancel or enter buttons
 void move_ce(char pos){
 	device = fopen("/dev/arduino1","r+");
-	/*if (strcmp(pos, "C") != 0 || strcmp(pos, "E") != 0){
-		printf("Position not posible |%s|\n ", pos);
-	}	
-	else*/ if(device != NULL){
+		
+    if(device != NULL){
 		fprintf(device, "%c", pos);
 		fclose(device);
 	}
