@@ -144,7 +144,18 @@ void _move(int _x, int _y)
 
 		//printf("Next move: (%d, %d)\n", curr_x, curr_y);
 		int val = keyboard[curr_y][curr_x];
-		/*move(val)*/
+		if (val == 67)
+		{
+			move('C');
+		}
+		else if (val == 69)
+		{
+			move('E');
+		}
+		else
+		{
+			move(val)
+		}
 		sleep(1);
 		_move(_x, _y);
 	}
