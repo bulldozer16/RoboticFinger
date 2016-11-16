@@ -1,0 +1,1 @@
+cmd_/home/oskrd/Documentos/SO/proyecto3/usbArd.ko := ld -r -m elf_x86_64 -T ./scripts/module-common.lds --build-id  -o /home/oskrd/Documentos/SO/proyecto3/usbArd.ko /home/oskrd/Documentos/SO/proyecto3/usbArd.o /home/oskrd/Documentos/SO/proyecto3/usbArd.mod.o
